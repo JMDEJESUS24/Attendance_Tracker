@@ -1,5 +1,5 @@
 # Attendance Tracker App for Python Programming Assesment 2
-# Date: 2026-09-01
+# Date: 2026-09-06
 # Team 4 - Jeremiah de Jesus, Ellen Tran, Nalin Rasupinghe, Saba Firdous
 import csv
 from datetime import date
@@ -7,17 +7,32 @@ from datetime import date
 # Get student's name (Ellen Tran)
 # This is the function to ask for the first and last name and return those values
 def get_student():
-    first_name = input("Enter student's first name? ")
-    last_name = input("Enter student's last name? ")
-    
-    return first_name, last_name
+    while True:
+        first_name = input("Enter student's first name(s)? ")
+        last_name = input("Enter student's last name? ")
 
+        # Test Case 1: Only allow alphabet characters and spaces
+        # in the first name and last name.
+        if (not first_name.replace(" ", "").isalpha() or
+            not last_name.replace(" ", "").isalpha()):
+            print("Invalid name. Please enter letters only.")
+            continue
+
+        # Test Case 2: Check that the first name(s) and last name
+        # do not contain the same name.
+        if (first_name.lower().endswith(" " + last_name.lower()) or
+            last_name.lower().startswith(first_name.lower() + " ")):
+            print("Invalid name. Please enter first name(s) and last name separately.")
+            continue
+
+        return first_name, last_name
+        
 # Get attendance (Nalin Rasupinghe)
 # This is the function to ask if the student is present or absent and return those values
 # It also make sure that it handles lower and upper case inputs of 'y'
 def get_attendace():
     present = input("Is the student present? (y/n) ")
-    
+    #Test Case 3: Check that the input is either 'y' or 'n' (case insensitive).
     if present.lower() == 'y':
         return 'Present'
     else:
